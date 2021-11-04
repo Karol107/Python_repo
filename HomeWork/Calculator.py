@@ -17,6 +17,7 @@ print("2.Odejmowanie")
 print("3.Mnożenie")
 print("4.Dzielenie")
 print("0.Zakoncz")
+
 while True:
     choice = input("Wybierz operację(1/2/3/4/0): ")
 
@@ -24,6 +25,7 @@ while True:
         if choice == '0':
             print('Zakoncz')
             break
+            
         num1 = float(input("Podaj pierwszą liczbę: "))
         num2 = float(input("Podaj drugą liczbę: "))
 
