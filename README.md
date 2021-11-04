@@ -1,1 +1,1 @@
-# Python_repo
+# Python_repo for my internal Python and Selenium course
