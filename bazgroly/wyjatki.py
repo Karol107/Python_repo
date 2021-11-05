@@ -1,3 +1,0 @@
-#obsluga wyjatkow
-
-d
