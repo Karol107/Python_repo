@@ -1,2 +1,3 @@
 #obsluga wyjatkow
 
+d
