@@ -50,7 +50,7 @@ print(response.text)
 print("-" * 50, '\nKurs Euro:                ', 'EURO','\nData i godzina:            ' 'Date_and_Time',
       '\nCzas wykonania zapytania: ', 'Data i godzina' ) #gdy sie powiedzie
 print("-" * 50, '\nBlad pozyskania danych    "Request Timeout"','\nData i godzina:            ' 'Date_and_Time',
-      '\nCzas wykonania zapytania: ', 'Data i godzina' ) #"gdy Timeou"
+      '\nCzas wykonania zapytania: ', 'Data i godzina' ) #"gdy Timeou"g
 
 
 
