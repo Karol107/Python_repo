@@ -50,4 +50,4 @@ while True:
 
 
     else:
-        print("Błędna wartość, podaj poprawną")
+        print("\nBłędna wartość, podaj poprawną\n")
