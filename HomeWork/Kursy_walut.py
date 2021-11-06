@@ -38,21 +38,34 @@
 
 
 import requests
-
-# class spr_kurs():
-
-url = 'http://api.exchangeratesapi.io/v1/latest?access_key=93ba2d6a469cb686077452c399fcd7f2'
-response = requests.get(url)
+import datetime
+import json
 
 
-print(response.text)
-
-print("-" * 50, '\nKurs Euro:                ', 'EURO','\nData i godzina:            ' 'Date_and_Time',
-      '\nCzas wykonania zapytania: ', 'Data i godzina' ) #gdy sie powiedzie
-print("-" * 50, '\nBlad pozyskania danych    "Request Timeout"','\nData i godzina:            ' 'Date_and_Time',
-      '\nCzas wykonania zapytania: ', 'Data i godzina' ) #"gdy Timeou"g
+url = 'http://api.exchangeratesapi.io/v1/latest?access_key=93ba2d6a469cb686077452c399fcd7f2'    # Trial version 30 days only :(
+# url = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml'
 
 
+# # Pobranie aktualnego kursu
+def get_EUR():
+    r = requests.get(url)
+    data = json.loads(r.text)
+    waluty = data['rates']
+    PLN = waluty['PLN']  # Euro is a base in this api
+    print("-" * 25 + '$$' + "-" * 25, '\nKurs Euro:', PLN)
+
+
+
+get_EUR()
+
+
+
+
+#
+# print("-" * 50, '\nBlad pozyskania danych    "Request Timeout"','\nData i godzina:            ' 'Date_and_Time',
+#       '\nCzas wykonania zapytania: ', 'Data i godzina' ) #"gdy Timeou"g
+#
+#
 
 
 
