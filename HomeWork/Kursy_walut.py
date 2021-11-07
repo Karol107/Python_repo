@@ -1,71 +1,46 @@
-#
-# funkcja udezajaca pod endpoint:
-# strona np https://exchangeratesapi.io/documentation/
-
-# zabezpieczenie przed bledem timeout try/except
-# funkcja mierzaca cas trwania zapytania oraz date i godzine w kotrej odbylo sie zapytanie wyprointuj te czasy
-# program w petli z interwalem 15 sec
-
-
-# Przykladowy output:
-# -----------------------
-# Kurs Euro: cos tam
-# Data i Godzina: Data Godzina
-# Czas wykonania zapytania: 150msilib
-# ------------------------------------
-#
-# interwal 15s
-#
-# jelsi time out to:
-#
-# ---------------------------------
-# Blad pozyskania danych
-# Data i godzian Data Godzina
-# Czas wykonania zapytania 100 000 ms
-
-
-# zadnie na  6 wygenerowac wykres jako plik csv
-
-# ____________________________________________________
-
-# reuirements:
-#
-# storna musi odpoiwadac
-# zabezpiecznei przed zbyt dlugim zapytnaiem
-
-
-
-
-
 import requests
-import datetime
 import json
-
+import time
+import datetime
 
 url = 'http://api.exchangeratesapi.io/v1/latest?access_key=93ba2d6a469cb686077452c399fcd7f2'    # Trial version 30 days only :(
 # url = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml'
 
 
-# # Pobranie aktualnego kursu
 def get_EUR():
+    start_duration = datetime.datetime.now()
     r = requests.get(url)
     data = json.loads(r.text)
+    duration = datetime.datetime.now() - start_duration
     waluty = data['rates']
     PLN = waluty['PLN']  # Euro is a base in this api
-    print("-" * 25 + '$$' + "-" * 25, '\nKurs Euro:', PLN)
+    return PLN, duration
+
+def actual_hour():
+    actual_hour = datetime.datetime.now()
+    actual_hour = str(actual_hour.strftime('%d-%m-%Y %H:%M:%S'))
+    print('Data i godzina: ', actual_hour)
+    return actual_hour
+
+while True:
+    try:
+        PLN, duration = get_EUR()
+        hour = actual_hour()
+        print("-" * 15 + '<< EUR >>' + "-" * 15, '\nKurs Euro:      ', PLN,'\nData i godzina: ',hour,
+              '\nCzas zapytania: ', duration.microseconds/1000, 'ms')
+
+    except requests.exceptions.ConnectionError as err02:
+        print("Error connecting check url: ", err02)
+    except:                                                                                             #mam watpliwosc ze to sie nigdy nie wykona
+        if duration.microseconds/1000 > 1000:
+            print("-" * 15 + '<< EUR >>' + "-" * 15, '\nBlad pobierania danych', '\nData i godzina: ', hour,
+                  '\nCzas zapytania: ', duration.microseconds / 1000, 'ms')
+
+
+    time.sleep(15)
 
 
 
-get_EUR()
-
-
-
-
-#
-# print("-" * 50, '\nBlad pozyskania danych    "Request Timeout"','\nData i godzina:            ' 'Date_and_Time',
-#       '\nCzas wykonania zapytania: ', 'Data i godzina' ) #"gdy Timeou"g
-#
-#
 
 
 
@@ -73,11 +48,15 @@ get_EUR()
 
 
 
-#
-# try:
-#    wait = WebDriverWait(driver, 5)
-#    wait.until(ec.visibility_of_element_located((By.ID, "test")))
-#    print('iframe found')
-#
-# except TimeoutException:
-#    print('There is no iframe')
+
+
+
+
+
+
+
+
+
+
+
+
