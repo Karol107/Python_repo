@@ -1,0 +1,37 @@
+kazdyt element na stronie ma swojego lokalizatora
+pola tekstowe przyciski etc
+do wyszukiwania w przegldarce przycisnij F12 dev view
+
+
+Lokalizatory:
+
+ID              uwaga przy zapinaniu sie na niego bo czesto zmienia sie z updatem strony (dos latwy w uzyciu)
+
+Name            slabszy niz id ale czesem nie ma wyboru i pozostaje tylko ten
+
+CSS Selector    mamy kilka rodzajow Tagi oraz ID Tagi z klasa oraz Tag atrybuty, tekst
+
+DOM             Dokumnet object model czyli takie API dla dok html kozystamu tu z getElementbyId, getElementbyName
+
+LINK TEXT       czasamio jedyna opcja dosc czesto zminny lokalizator
+
+XPath           nie odporny na zmiany -najgorszy wybor podaje sie cala sciezke do elemntu
+
+
+
+jakich lokalizatorw uzywac?
+
+dobra praktyka jest zapinanie sie na selectory typu ID np:  id = 'username'
+choc czasem generowane sa dynamiczne. Warto dogadac sie z front dev aby dodal specjalne slek do testow.
+dodanie niezmiennego selektora pomaga w testowaniu.
+ogolnie nalezy uzywac lokalizatorow kore bd sie zmienialy jak najrzadziej
+
+jak wyszukiwac lokalizatory na stronie?
+
+przechodzi pod adres + F12 to view dev mode
+lub prawy przyscik myszy i klik zbadaj
+interesuje nas body strony
+mozna prawym skopoopwac copy body selector lub xpath
+
+
+do nauki dodawania atrybutow w html
