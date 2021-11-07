@@ -1,45 +1,63 @@
+# Zadanie domowe modul 5, pobieranie kursu walut EUR. Author: kk_kontakt@interia.eu
+
 import requests
 import json
 import time
 import datetime
+import pandas as pd
 
 url = 'http://api.exchangeratesapi.io/v1/latest?access_key=93ba2d6a469cb686077452c399fcd7f2'    # Trial version 30 days only :(
-# url = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml'
 
 
 def get_EUR():
-    start_duration = datetime.datetime.now()
     r = requests.get(url)
     data = json.loads(r.text)
-    duration = datetime.datetime.now() - start_duration
     waluty = data['rates']
     PLN = waluty['PLN']  # Euro is a base in this api
-    return PLN, duration
+    return PLN
 
-def actual_hour():
+
+def actual_hour_and_duration():
+    start_duration = datetime.datetime.now()
+    get_EUR()
+    duration = datetime.datetime.now() - start_duration
     actual_hour = datetime.datetime.now()
     actual_hour = str(actual_hour.strftime('%d-%m-%Y %H:%M:%S'))
-    print('Data i godzina: ', actual_hour)
-    return actual_hour
+    return actual_hour, duration
+
+# def export_to_csv(): ##zadanie z *, nie mam pomyslu, wymaga dopracowania
+#     dict = get_EUR(), actual_hour_and_duration()
+#     dict = {'Kurs z dnia': actual_hour, 'Kurs EUR': PLN}
+#     df = pd.DataFrame(dict)
+#     df.to_csv('Kursy_walut.csv')
 
 while True:
     try:
-        PLN, duration = get_EUR()
-        hour = actual_hour()
-        print("-" * 15 + '<< EUR >>' + "-" * 15, '\nKurs Euro:      ', PLN,'\nData i godzina: ',hour,
-              '\nCzas zapytania: ', duration.microseconds/1000, 'ms')
+        PLN = get_EUR()
+        actual_hour, duration = actual_hour_and_duration()
+        print(actual_hour, duration)
+        print("-" * 15 + '<< source: exchangeratesapi >>' + "-" * 15, '\nKurs Euro:                ', PLN
+              , '\nData i godzina:           ',actual_hour,'\nCzas wykonania zapytania: ', duration.microseconds/1000, 'ms')
+
+        # export_to_csv()
 
     except requests.exceptions.ConnectionError as err02:
-        print("Error connecting check url: ", err02)
-    except:                                                                                             #mam watpliwosc ze to sie nigdy nie wykona
-        if duration.microseconds/1000 > 1000:
-            print("-" * 15 + '<< EUR >>' + "-" * 15, '\nBlad pobierania danych', '\nData i godzina: ', hour,
-                  '\nCzas zapytania: ', duration.microseconds / 1000, 'ms')
+        print("Error connecting, check url: ", err02)
+    except requests.exceptions.HTTPError as err01:
+        print("HTTP error: ", err01)
+    except requests.exceptions.Timeout as err03:
+        print("Timeout error:", err03)
+    except requests.exceptions.RequestException as err04:
+        print("Error: ", err04)
 
+
+    ## wykorzystalem gotowca z gory bo mam wrazenie ze to ponizej nigdy sie nie wykona:
+    # except:
+    #     if duration.microseconds/1000 > 1000:
+    #         print("-" * 15 + '<< EUR >>' + "-" * 15, '\nBlad pobierania danych', '\nData i godzina: ', hour,
+    #               '\nCzas wykonania zapytania: ', duration.microseconds / 1000, 'ms')
 
     time.sleep(15)
-
-
 
 
 
