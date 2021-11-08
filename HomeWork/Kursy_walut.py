@@ -25,16 +25,13 @@ def actual_hour_and_duration():
     actual_hour = str(actual_hour.strftime('%d-%m-%Y %H:%M:%S'))
     return actual_hour, duration
 
-# def export_to_csv(): ##zadanie z *, nie mam pomyslu, wymaga dopracowania
-#     dict = get_EUR(), actual_hour_and_duration()
-#     dict = {'Kurs z dnia': actual_hour, 'Kurs EUR': PLN}
-#     df = pd.DataFrame(dict)
-#     df.to_csv('Kursy_walut.csv')
+
 
 while True:
     try:
         PLN = get_EUR()
         actual_hour, duration = actual_hour_and_duration()
+
         print(actual_hour, duration)
         print("-" * 15 + '<< source: exchangeratesapi >>' + "-" * 15, '\nKurs Euro:                ', PLN
               , '\nData i godzina:           ',actual_hour,'\nCzas wykonania zapytania: ', duration.microseconds/1000, 'ms')
@@ -49,6 +46,13 @@ while True:
         print("Timeout error:", err03)
     except requests.exceptions.RequestException as err04:
         print("Error: ", err04)
+
+    # def export_to_csv():  ##zadanie z *, nie mam pomyslu, wymaga dopracowania
+dict = get_EUR(), actual_hour_and_duration()
+    # dict = {'Kurs z dnia': actual_hour, 'Kurs EUR': PLN}
+print(dict)
+df = pd.DataFrame(dict)
+df.to_csv('Kursy_walut.csv')
 
 
     ## wykorzystalem gotowca z gory bo mam wrazenie ze to ponizej nigdy sie nie wykona:

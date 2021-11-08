@@ -31,6 +31,6 @@ from helpers.Data_generator import DataGenerator #zaciagniecie pomocniczego skry
 #
 #
 
-
+import rstr
 test = DataGenerator.phoneNumberReg()
 print(test)
