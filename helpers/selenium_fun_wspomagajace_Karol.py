@@ -32,5 +32,5 @@ from helpers.Data_generator import DataGenerator #zaciagniecie pomocniczego skry
 #
 
 import rstr
-test = DataGenerator.phoneNumberReg()
+test = DataGenerator.mobileNumberReg()
 print(test)
