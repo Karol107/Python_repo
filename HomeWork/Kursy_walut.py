@@ -6,7 +6,7 @@ import time
 import datetime
 # import pandas as pd
 
-url = 'http://api.nbp.pll/api/cenyzlota/last/30/?format=json'
+url = 'http://api.nbp.pl/api/cenyzlota/last/30/?format=json'
 
 
 def get_gold_price():
